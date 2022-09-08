@@ -5,6 +5,8 @@ from aws_cdk import (
     aws_lambda, aws_apigateway,
 )
 
+from aws_cdk_snyk.hitcount import HitCounter
+
 
 class AwsCdkSnykStack(Stack):
 
@@ -22,9 +24,14 @@ class AwsCdkSnykStack(Stack):
             }
         )
 
+        hello_with_counter = HitCounter(
+            self, 'HelloHitCounter',
+            downstream=my_lambda
+        )
+
         aws_apigateway.LambdaRestApi(
             self,
             'Endpoint',
-            handler=my_lambda,
+            handler=hello_with_counter._handler,
             default_method_options=MethodOptions(authorization_type=AuthorizationType.NONE)
         )
