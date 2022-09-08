@@ -12,7 +12,8 @@ class HitCounter(Construct):
 
         table = ddb.Table(
             self, 'Hits',
-            partition_key={'name': 'path', 'type': ddb.AttributeType.STRING}
+            partition_key={'name': 'path', 'type': ddb.AttributeType.STRING},
+            point_in_time_recovery=False
         )
 
         self._handler = _lambda.Function(
