@@ -7,14 +7,17 @@ jobs:
   snyk_scan:
     runs-on: ubuntu-latest
     steps:
-      -
-        name: Checkout
+      - name: Checkout
         uses: actions/checkout@v2
-      -
-        name: Setup Node
+
+      - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: 16
+
+      - name: Setup Snyk + snyk-to-html
+        run: |
+          npm install snyk-to-html -g
 
       - name: cdk synth
         uses: youyo/aws-cdk-github-actions@v2
@@ -34,12 +37,13 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           json: true
-      -
-        name: snyk to html
+
+      - name: snyk to html
         run: |
           mkdir build
           snyk-to-html -i snyk.json -o build/results.html
-      -
+
+      - name: snyk to html
         uses: actions/upload-artifact@v3
         with:
           name: vuln_report
