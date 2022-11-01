@@ -18,7 +18,7 @@ env.bak/
 venv.bak/
 
 # CDK Context & Staging files
-.cdk.staging/
-cdk.out/
+# .cdk.staging/
+# cdk.out/
 
 .idea/
